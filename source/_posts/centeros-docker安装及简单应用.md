@@ -9,7 +9,7 @@ categories:
 date: 2019-08-16 12:52:02
 ---
 
-###### docker安裝
+#### docker安裝
 ##### 卸载
 ```
 sudo yum remove docker \
@@ -62,13 +62,23 @@ sudo setfacl -m user:bamboo:rw /var/run/docker.sock
 #还有一种方式就是在加入docker的group
 
 ```
-### docker machine
+##### login
+```bash
+docker login
+#你的docker hub的用户名密码
+```
+用户名为参数登录
+```bash
+docker login --username=gedit registry.cn-hangzhou.aliyuncs.com
+# 你的ali dockerhub的密码
+```
+#### docker machine
 
 ```
 docker-machine create -d generic --generic-ip-address=192.168.1.67 --generic-ssh-user=administrator host67
 ```
-### swarm集群
-#### 配置
+#### swarm集群
+##### 配置
 ```
 sudo tee /etc/sysconfig/docker <<-'EOF'
 OPTIONS='-g /cutome-path/docker -H tcp://0.0.0.0:2375'
@@ -112,7 +122,7 @@ docker service create --name guoi-micro-shopie-shop -p 9039:9002 -p 8940:8902 --
 
 
 
-###### 配置本地仓库
+#### 配置本地仓库
 [原文链接](https://blog.csdn.net/ronnyjiang/article/details/71189392)
 
 ```
@@ -135,7 +145,7 @@ curl -XGET http://192.168.1.250:5000/v2/guoi/guoi-micro-shopie-catalog/tags/list
 ```
 
 
-##### jenkins jar运行
+#### jenkins jar运行
 ```
 cd github/gedit_cloud_user_test/
 pid=`ps -ef | grep gedit-cloud-user-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}'`
@@ -150,17 +160,7 @@ gradle build -x test -x docker
 BUILD_ID=DONTKILLME #jenkins环境变量
 nohup java -Dspring.profiles.active=test -jar -Xmx500m build/libs/gedit-cloud-user-0.0.1-SNAPSHOT.jar >>/root/log/gedit_user/user.log 2>&1&
 ```
-##### login
-```bash
-docker login
-#你的docker hub的用户名密码
-```
-用户名为参数登录
-```bash
-docker login --username=gedit registry.cn-hangzhou.aliyuncs.com
-# 你的ali dockerhub的密码
-```
-##### docker mysql
+#### docker mysql
 
 ```
 #dump data
