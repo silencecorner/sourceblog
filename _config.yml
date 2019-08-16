@@ -8,12 +8,12 @@ subtitle:
 description: 一个闷骚的博客
 keywords: 闷骚的博客,silencecorner,silence角落,java,分布式
 author: silence角落
-language: zh-Hans
+language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://silencecorner.com
+url: https://silencecorner.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -34,8 +34,8 @@ default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
-render_drafts: false
-post_asset_folder: false
+render_drafts: true
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -73,10 +73,18 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+# 7.3.0
 theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/silencecorner/myblog.git
+  repo: https://github.com/silencecorner/silencecorner.github.io.git
+  branch: master
+search:
+    path: search.xml
+    field: post
+    format: html
+    limit: 10000 
+  
