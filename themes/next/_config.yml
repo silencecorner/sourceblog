@@ -661,7 +661,7 @@ livere_uid: # <your_uid>
 gitalk:
   enable: true
   github_id: silencecorner
-  repo: https://github.com/silencecorner/silencecorner.github.io
+  repo: silencecorner.github.io
   client_id: c11c2cbf3e1c2d0d9f9d # GitHub Application Client ID
   client_secret: 27face6fb1f58b5ae5984d3d27fec77966d9f794 # GitHub Application Client Secret
   admin_user: silencecorner # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
