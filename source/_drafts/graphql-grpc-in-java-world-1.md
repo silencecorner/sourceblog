@@ -1,0 +1,267 @@
+---
+title: graphql grpc in java world(1)
+tags:
+- graphql
+- grpc
+categories:
+- java
+---
+### 前言
+graphql和grpc的protobuf的schema都是一个描述性文件，描述我们要做的是，只是双方的具体作用有差别而已。在Java中使用schema first的`graphql-java-tools`无疑是graphql在java语言的最佳入门实践，那么问题就来啦！protobuf和graphql各自都有自己的类型系统，graphql因为会序列化为json，那么就要遵从java bean的规范（序列化框架要求），protobuf也有自己的一套类型系统。
+#### 优化思路：nodejs
+因为在去年实践过一次，没有深入思考，写起来总感觉有一点别扭！所以最开始我的想法是改用nodejs来写去掉类型检查，也写过一个在[repo的graphql-api中](https://github.com/silencecorner/graphql-grpc-exmaple/tree/master/graphql-api)
+#### 优化思路：converter
+noejs写起来挺简单的，但是java才是主要开发语言，所以又按照去年的那个套路实现了一次，按照converter的思路优化一下但是还是有一些不适，使用了[protobuf-converter](https://github.com/BAData/protobuf-converter)类库。
+#### 优化思路：jackson序列化框架
+今天我就在想能不能jackson和protobuf之间做桥接一下，google搜索了果然已经有实现的[类库](https://github.com/HubSpot/jackson-datatype-protobuf)，终于不用再写一遍java model啦！
+
+### 修改代码
+删除之前的inputs、types package，改用protobuf生成的代码，这里桥接要注入`ProtobufModule`，又想能不能直接使用返回`ListenableFuture`实例，通过查找资料可以实现.
+#### 添加`GraphqlToolConfiguration.java`
+```
+@Configuration
+public class GraphqlToolConfiguration {
+	@Bean
+	SchemaParserOptions options(){
+		ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
+			.modules(new ProtobufModule(), new Jdk8Module(), new KotlinModule(), new JavaTimeModule())
+			.build();
+		return SchemaParserOptions.newOptions()
+			.genericWrappers(SchemaParserOptions.GenericWrapper
+				.withTransformer(ListenableFuture.class,0,ListenableFuturesExtra::toCompletableFuture, type -> type))
+			.objectMapperProvider(fieldDefinition -> objectMapper )
+			.useDefaultGenericWrappers(true)
+			.build();
+	}
+}
+```
+这样我们就可以使用protobuf生成的class、grpc直接返回的`ListenableFuture`，字段对应protbuf的getXxx、setXxx，
+#### schema.graphql
+```graphql
+scalar DateTime
+
+
+# 作者
+type Author{
+  # unique id
+  id: ID!
+  # 名称
+  name: String
+}
+# 添加作者参数
+input AddAuthorRequest{
+  # 名字
+  name: String!
+}
+
+type Post {
+  # id
+  id: ID
+  # 标题
+  title: String
+  # 内容
+  body: String
+  # 创建时间
+  createdAt: DateTime
+  # 文章作者
+  author: Author
+}
+
+# 分页返回结果
+type Posts {
+  # 总数
+  count: Int
+  # 当前页
+  page: Int
+  # 条数
+  limit: Int
+  # 结点
+  nodesList: [Post]
+}
+
+# 添加文章参数
+input AddPostRequest {
+  # 标题
+  title: String
+  # 内容
+  body: String
+}
+# 分页参数
+input ListPostRequest{
+    # 第几页
+    page: Int!
+    # 获取条数
+    limit: Int!
+}
+type Query {
+  listPosts(request: ListPostRequest): Posts
+}
+
+type Mutation {
+  addPost(request: AddPostRequest): Post
+  # 新增作者
+  addAuthor(request: AddAuthorRequest!): Author
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+```
+#### Mutation.java
+```java
+@AllArgsConstructor
+@Component
+public class Mutation implements GraphQLMutationResolver {
+
+    private final PostClient postClient;
+
+    private final AuthorClient authorClient;
+
+    public ListenableFuture<PostProto.Post> addPost(PostProto.AddPostRequest request){
+		return postClient.addPost(request.toBuilder().setAuthorId(1).build());
+    }
+
+    public ListenableFuture<AuthorProto.Author> addAuthor(AuthorProto.AddAuthorRequest request){
+    	  return authorClient.addAuthor(request);
+    }
+}
+```
+#### Query.java
+```java
+@AllArgsConstructor
+@Component
+public class Query implements GraphQLQueryResolver {
+    private final PostClient postClient;
+    public ListenableFuture<PostProto.Posts> listPosts(PostProto.ListPostRequest request){
+        return postClient.listPost(request);
+    }
+}
+```
+#### PostResolver.java
+```java
+@Component
+public class PostResolver implements GraphQLResolver<PostProto.Post> {
+
+	@Autowired
+	private AuthorClient authorClient;
+
+	public ListenableFuture<AuthorProto.Author> author(PostProto.Post post){
+		return authorClient.getAuthor(post.getAuthorId());
+	}
+
+}
+```
+#### PostClient.java
+```
+@Service
+public class PostClient {
+    @GrpcClient("post-grpc-server")
+    private PostServiceGrpc.PostServiceFutureStub postServiceFutureStub;
+
+    public ListenableFuture<PostProto.Post> addPost(sample.PostProto.AddPostRequest request){
+        return postServiceFutureStub.addPost(request);
+    }
+
+    public ListenableFuture<PostProto.Posts> listPost(sample.PostProto.ListPostRequest request){
+        return postServiceFutureStub.listPosts(request);
+    }
+
+}
+```
+#### AuthorClient.java
+```java
+@Service
+public class AuthorClient {
+    @GrpcClient("author-grpc-server")
+    private AuthorServiceGrpc.AuthorServiceFutureStub authorServiceFutureStub;
+
+    public ListenableFuture<AuthorProto.Author> addAuthor(AuthorProto.AddAuthorRequest request){
+        return authorServiceFutureStub.addAuthor(request);
+    }
+
+
+    public ListenableFuture<AuthorProto.Author> getAuthor(Integer id){
+        return authorServiceFutureStub.getAuthor(AuthorProto.GetAuthorRequest.newBuilder().setId(id).build());
+    }
+}
+```
+### new feature
+[proto3](https://developers.google.com/protocol-buffers/docs/proto3)原生是不支持数据验证的，可能我们就要手写代码一个字段一个字段去做校验，项目中就会出现大量的丑陋到爆炸的代码。这里我找到一个protoc的[validate plugin](https://github.com/envoyproxy/protoc-gen-validate)，目前支持
+- go
+- gogo 
+- cc for c++
+- java
+  
+以目前情况来讲，不需要多语言调用，即使出现多言调用的情况也可以，不影响正常调用，只是缺少验证而已，再不济也可以自己实现嘛！
+#### 修改proto
+```proto
+import "validate/validate.proto";
+message AddAuthorRequest{
+    string name = 1 [(validate.rules).string = {min_len: 5, max_len: 10}];
+}
+```
+#### 修改build.gradle
+##### 添加必要依赖
+```gradle
+compile "io.envoyproxy.protoc-gen-validate:pgv-java-stub:${pgvVersion}"
+compile "io.envoyproxy.protoc-gen-validate:pgv-java-grpc:${pgvVersion}"
+```
+##### 修改编译配置
+```gradle
+protobuf {
+    // Configure the protoc executable
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protocVersion}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+        javapgv {
+            artifact = "io.envoyproxy.protoc-gen-validate:protoc-gen-validate:${pgvVersion}"
+        }
+    }
+
+    generateProtoTasks {
+        all()*.plugins {
+            javapgv {
+                option "lang=java"
+            }
+            grpc {}
+        }
+    }
+}
+```
+
+#### 添加客户端ValidatingClientInterceptor
+
+```java
+@Configuration
+public class GlobalClientInterceptorConfiguration {
+
+    @Bean
+    public GlobalClientInterceptorConfigurer globalInterceptorConfigurerAdapter() {
+	ValidatorIndex index = new ReflectiveValidatorIndex();
+        return registry -> registry
+			.addClientInterceptors(new LogGrpcInterceptor())
+			.addClientInterceptors(new ValidatingClientInterceptor(index));
+    }
+
+}
+```
+#### 服务端添加ValidatingServerInterceptor
+```
+@Configuration
+public class GlobalClientInterceptorConfiguration {
+
+    @Bean
+    public GlobalServerInterceptorConfigurer globalInterceptorConfigurerAdapter() {
+		ValidatorIndex index = new ReflectiveValidatorIndex();
+        return registry -> registry.addServerInterceptors(new ValidatingServerInterceptor(index));
+    }
+
+}
+```
+### 总结
+介绍graphql、gprc in java world的一些问题，一些intergration的思路，新特性参数验证。下一篇介绍使用graphql结合field mask做单项更新！
