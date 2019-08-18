@@ -257,7 +257,7 @@ public class GlobalClientInterceptorConfiguration {
 #### 服务端添加ValidatingServerInterceptor
 ```
 @Configuration
-public class GlobalClientInterceptorConfiguration {
+public class GlobalServerInterceptorConfiguration {
 
     @Bean
     public GlobalServerInterceptorConfigurer globalInterceptorConfigurerAdapter() {
