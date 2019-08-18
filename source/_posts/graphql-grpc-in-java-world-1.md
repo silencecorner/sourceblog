@@ -265,5 +265,32 @@ public class GlobalClientInterceptorConfiguration {
 
 }
 ```
+#### 测试
+浏览器打开idea本地`http://localhost:8888/playground`
+<br>
+浏览器打开docker本地`http://localhost:8000/playground`
+```
+mutation {
+  addAuthor(request: { name: "" }) {
+    id
+    name
+  }
+}
+```
+因为名字验证规则为长度5~10，这里name值为空，执行返回结果
+```
+{
+  "errors": [
+    {
+      "message": "INVALID_ARGUMENT: .sample.author.AddAuthorRequest.name: length must be 5 but got: 0 - Got \"\""
+    }
+  ],
+  "extensions": {},
+  "data": {
+    "addAuthor": null
+  }
+}
+```
+生效，啦啦啦！
 ### 总结
 介绍graphql、gprc in java world的一些问题，一些intergration的思路，新特性参数验证，下一篇介绍使用graphql结合field mask做单项更新！
