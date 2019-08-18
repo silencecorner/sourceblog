@@ -9,17 +9,17 @@ date: 2019-08-18 01:39:23
 ---
 
 ### 前言
-graphql和grpc的protobuf的schema都是一个描述性文件，描述我们要做的是，只是双方的具体作用有差别而已。在Java中使用schema first的`graphql-java-tools`无疑是graphql在java语言的最佳入门实践，那么问题就来啦！protobuf和graphql各自都有自己的类型系统，graphql因为会序列化为json，那么就要遵从java bean的规范（序列化框架要求），protobuf也有自己的一套类型系统。
-#### 优化思路：nodejs
+graphql和grpc的protobuf的schema都是一个描述性文件，描述我们要做的是，只是双方的具体作用有差别而已。在Java中使用schema first的`graphql-java-tools`无疑是graphql在java语言的最佳入门实践，那么问题就来啦！protobuf和graphql各自都有自己的类型系统，graphql因为会序列化为json，那么就要遵从java bean的规范（序列化框架要求），protobuf使用的builder构造对象，没有默认的构造方法。
+### 优化思路
+#### nodejs
 因为在去年实践过一次，没有深入思考，写起来总感觉有一点别扭！所以最开始我的想法是改用nodejs来写去掉类型检查，也写过一个在[repo的graphql-api中](https://github.com/silencecorner/graphql-grpc-exmaple/tree/master/graphql-api)
-#### 优化思路：converter
-noejs写起来挺简单的，但是java才是主要开发语言，所以又按照去年的那个套路实现了一次，按照converter的思路优化一下但是还是有一些不适，使用了[protobuf-converter](https://github.com/BAData/protobuf-converter)类库。
-#### 优化思路：jackson序列化框架
+#### converter
+noejs写起来挺简单的，但是java才是主要开发语言，所以又按照去年的那个套路实现了一次，按照converter的思路使用了[protobuf-converter](https://github.com/BAData/protobuf-converter)类库,优化了一下但是还是有一些不适。
+#### jackson序列化框架
 今天我就在想能不能jackson和protobuf之间做桥接一下，google搜索了果然已经有实现的[类库](https://github.com/HubSpot/jackson-datatype-protobuf)，终于不用再写一遍java model啦！
-
-### 修改代码
+##### 删除代码
 删除之前的inputs、types package，改用protobuf生成的代码，这里桥接要注入`ProtobufModule`，又想能不能直接使用返回`ListenableFuture`实例，通过查找资料可以实现.
-#### 添加`GraphqlToolConfiguration.java`
+##### 添加`GraphqlToolConfiguration.java`
 ```
 @Configuration
 public class GraphqlToolConfiguration {
@@ -38,7 +38,7 @@ public class GraphqlToolConfiguration {
 }
 ```
 这样我们就可以使用protobuf生成的class、grpc直接返回的`ListenableFuture`，字段对应protbuf的getXxx、setXxx，
-#### schema.graphql
+##### schema.graphql
 ```graphql
 scalar DateTime
 
@@ -110,7 +110,7 @@ schema {
   mutation: Mutation
 }
 ```
-#### Mutation.java
+##### Mutation.java
 ```java
 @AllArgsConstructor
 @Component
@@ -129,7 +129,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 }
 ```
-#### Query.java
+##### Query.java
 ```java
 @AllArgsConstructor
 @Component
@@ -140,7 +140,7 @@ public class Query implements GraphQLQueryResolver {
     }
 }
 ```
-#### PostResolver.java
+##### PostResolver.java
 ```java
 @Component
 public class PostResolver implements GraphQLResolver<PostProto.Post> {
@@ -154,7 +154,7 @@ public class PostResolver implements GraphQLResolver<PostProto.Post> {
 
 }
 ```
-#### PostClient.java
+##### PostClient.java
 ```
 @Service
 public class PostClient {
@@ -171,7 +171,7 @@ public class PostClient {
 
 }
 ```
-#### AuthorClient.java
+##### AuthorClient.java
 ```java
 @Service
 public class AuthorClient {
