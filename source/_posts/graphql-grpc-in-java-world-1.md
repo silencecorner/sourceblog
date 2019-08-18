@@ -266,9 +266,8 @@ public class GlobalClientInterceptorConfiguration {
 }
 ```
 #### 测试
-浏览器打开idea本地`http://localhost:8888/playground`
-<br>
-浏览器打开docker本地`http://localhost:8000/playground`
+浏览器打开idea本地[http://localhost:8888/playground](http://localhost:8888/playground)<br>
+浏览器打开docker本地[http://localhost:8000/playground](http://localhost:8888/playground)
 ```
 mutation {
   addAuthor(request: { name: "" }) {
