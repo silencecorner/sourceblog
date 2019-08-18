@@ -195,7 +195,7 @@ public class AuthorClient {
 - cc for c++
 - java
   
-以目前情况来讲，不需要多语言调用，即使出现多言调用的情况也可以，不影响正常调用，只是缺少验证而已，再不济也可以自己实现嘛！
+以目前情况来讲，不需要多语言调用，即使出现多语言调用的情况也可以，不影响正常调用，只是缺少验证而已，再不济也可以自己实现嘛！
 #### 修改proto
 ```proto
 import "validate/validate.proto";
