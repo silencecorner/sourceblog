@@ -14,7 +14,7 @@ graphql和grpc的protobuf的schema都是一个描述性文件，只是双方的�
 #### nodejs
 因为在去年实践过一次，没有深入思考，写起来总感觉有一点别扭！所以最开始我的想法是改用nodejs来写去掉类型检查，也写过一个在[repo的graphql-api中](https://github.com/silencecorner/graphql-grpc-exmaple/tree/master/graphql-api)
 #### converter
-noejs写起来挺简单的，但是java才是主要开发语言，所以又按照去年的那个套路实现了一次，按照converter的思路使用了[protobuf-converter](https://github.com/BAData/protobuf-converter)类库,优化了一下但是还是有一些不适。
+nodejs写起来挺简单的，但是java才是主要开发语言，所以又按照去年的那个套路实现了一次，按照converter的思路使用了[protobuf-converter](https://github.com/BAData/protobuf-converter)类库,优化了一下但是还是有一些不适。
 #### jackson序列化框架
 今天我就在想能不能jackson和protobuf之间做桥接一下，google搜索了果然已经有实现的[类库](https://github.com/HubSpot/jackson-datatype-protobuf)，终于不用再写一遍java model啦！
 ##### 删除代码
