@@ -37,7 +37,7 @@ public class GraphqlToolConfiguration {
 	}
 }
 ```
-这样我们就可以使用protobuf生成的class、grpc直接返回的`ListenableFuture`，字段对应protbuf的getXxx、setXxx，
+这样我们就可以使用protobuf生成的class、grpc直接返回的`ListenableFuture`，字段对应protbuf的[JsonName](https://developers.google.com/protocol-buffers/docs/style#message-and-field-names)，
 ##### schema.graphql
 ```graphql
 scalar DateTime
