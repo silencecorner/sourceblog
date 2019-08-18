@@ -9,7 +9,8 @@ date: 2019-08-18 01:39:23
 ---
 
 ### 前言
-graphql和grpc的protobuf的schema都是一个描述性文件，只是双方的具体作用有差别而已。在Java中使用schema first的`graphql-java-tools`无疑是graphql在java语言的最佳入门实践，那么问题就来啦！protobuf和graphql各自都有自己的类型系统，graphql因为会序列化为json，那么就要遵从java bean的规范（序列化框架要求），protobuf使用的builder构造对象，没有默认的构造方法。
+graphql和grpc的protobuf的schema都是一个描述性文件，只是双方的具体作用有差别而已。在Java中使用schema first的`graphql-java-tools`无疑是graphql在java语言的最佳入门实践，那么问题就来啦！protobuf和graphql各自都有自己的类型系统，graphql因为会序列化为json，那么就要遵从java bean的规范（序列化框架要求），protobuf使用的builder构造对象，没有默认的构造方法。<br>
+本文代码仓库地址:[https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0](https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0)
 ### 优化思路
 #### nodejs
 因为在去年实践过一次，没有深入思考，写起来总感觉有一点别扭！所以最开始我的想法是改用nodejs来写去掉类型检查，也写过一个在[repo的graphql-api中](https://github.com/silencecorner/graphql-grpc-exmaple/tree/master/graphql-api)
@@ -18,7 +19,8 @@ nodejs写起来挺简单的，但是java才是主要开发语言，所以又按�
 #### jackson序列化框架
 今天我就在想能不能jackson和protobuf之间做桥接一下，google搜索了果然已经有实现的[类库](https://github.com/HubSpot/jackson-datatype-protobuf)，终于不用再写一遍java model啦！
 ##### 删除代码
-删除之前的inputs、types package，改用protobuf生成的代码，这里桥接要注入`ProtobufModule`，又想能不能直接使用返回`ListenableFuture`实例，通过查找资料可以实现.
+删除之前的inputs、types package，改用protobuf生成的代码，这里桥接要注入`ProtobufModule`，又想能不能直接使用返回`ListenableFuture`实例，通过查找资料可以实现。
+
 ##### 添加`GraphqlToolConfiguration.java`
 ```
 @Configuration
@@ -293,3 +295,5 @@ mutation {
 生效，啦啦啦！
 ### 总结
 介绍graphql、gprc in java world的一些问题，一些intergration的思路，新特性参数验证，下一篇介绍使用graphql结合field mask做单项更新！
+
+本文代码仓库地址:[https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0](https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0)
