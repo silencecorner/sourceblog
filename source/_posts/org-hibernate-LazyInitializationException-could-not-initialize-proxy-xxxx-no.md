@@ -99,7 +99,7 @@ public class Post {
 - 游离态/detachment 
   > 这个保存过的对象修改属性之后就变成了游离态（ps:持久态修改属性都会变成游离态)好了，上面有一句最关键的话就是`unless it was accessed by the application while the entity manager was open`。去找一下我们的`EntityManager`接口，它是实现了`Session`接口的。很自然的就想到了事务，持久化没有事务（我当时写的时候还真没有加，哈哈！）
 
-那么在什么场景下去使用返回`Optional`的`findById`，什么时候使用返回懒加载对象的`getOne`呢？从含义上来讲，`getOne`表示数据一定存在，可以在udpate的时候使用，而`findById` 会立刻返回结果，可能存在也可能不存在。另外，`getOne`因为是返回的是一个引用，还没有具体执行，给一种异步的感觉，可以在响应式web程序中使用返回`CompletableFuture`等封装对象，当也得复核数据必须在数据库中存在这个条件。
+那么在什么场景下去使用返回`Optional`的`findById`，什么时候使用返回懒加载对象的`getOne`呢？从含义上来讲，`getOne`表示数据一定存在，可以在udpate的时候使用，而`findById` 会立刻返回结果，可能存在也可能不存在。另外，`getOne`因为是返回的是一个引用，还没有具体执行，给一种异步的感觉，可以在响应式web程序中使用返回`CompletableFuture`等封装对象，当也得符合数据必须在数据库中存在这个条件。
 
 # 解决
 懒加载需要将相应的东西保存到session，我们能控制就是加一个事务注解在方法上`@Transactional`声明这个方法没有执行完之前session不关闭。因为使用的spring boot，加一个配置：
