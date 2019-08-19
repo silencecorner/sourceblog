@@ -5,7 +5,7 @@ title: >-
 tags:
   - issue
 categories: java
-date: 2019-08-19 17:01:20
+date: 2019-08-19 17:07:45
 ---
 
 # 问题
@@ -25,20 +25,20 @@ date: 2019-08-19 17:01:20
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ProtoField
+    @ProtoField
     private Integer id;
-	@ProtoField
+    @ProtoField
     private String title;
-	@ProtoField
+    @ProtoField
     private String body;
-	@ProtoField
+    @ProtoField
     private Integer authorId;
 
     @CreatedDate
-	@ProtoField(nullValue = ProtobufNullValueInspectorImpl.class,converter = LocalDateTimeConverterImpl.class)
+    @ProtoField(nullValue = ProtobufNullValueInspectorImpl.class,converter = LocalDateTimeConverterImpl.class)
     private LocalDateTime createdAt;
-	@LastModifiedDate
-	private LocalDateTime updatedAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     public Post(String title, String body) {
         this.title = title;
