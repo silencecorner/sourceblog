@@ -53,7 +53,7 @@ public class Post {
 }
 ```
 这里我并没有配置外键的关联对象呀！<br>
-具体的错误信息里面又有`no session`，在orm框架里面都有session的概念对应数据库的session，在mybatis中是`sqlsession`,spring data jpa和hibernate中就叫session。检查代码发现使用了`JpaRepository的getOne`方法获取数据库
+具体的错误信息里面又有`no session`，在orm框架里面都有session的概念对应数据库的session，在mybatis中是`sqlsession`,spring data jpa和hibernate中就叫session。检查代码发现使用了`JpaRepository的getOne`方法获取数据
 ```
   /**
   * Returns a reference to the entity with the given identifier. Depending on how the JPA persistence provider is
@@ -67,7 +67,7 @@ public class Post {
   */
   T getOne(ID id);
 ```
-大概的意思是，只返回一个引用具体，信息看异常信息，what?找到调用的方法说明
+大概的意思是，只返回一个引用，信息看异常信息，what?<br>找到调用的方法说明
 ```
   /**
     * Get an instance, whose state may be lazily fetched.
@@ -91,13 +91,15 @@ public class Post {
     */
   public <T> T getReference(Class<T> entityClass, Object primaryKey);
 ```
-这里终于说啦是懒加载，然后就是不希望这个对象编程游离态，除非entity manager打开。好吧！这里鼠标回忆一下hibernate和jpa的对象状态，这些状态都是从[martinfowler的工作单元/Unit of Work](https://martinfowler.com/eaaCatalog/unitOfWork.html)思想得来的。这些概念都是隶属于`persistence coentext`，翻译过来就是持久化上下文，既然隶属一个上下文那肯定是有关系的。其中
+这里终于说啦是懒加载，然后就是不希望这个对象变成游离态，除非entity manager打开。好吧！这里顺便回忆一下hibernate和jpa的对象状态，这些状态都是从[martinfowler的工作单元/Unit of Work](https://martinfowler.com/eaaCatalog/unitOfWork.html)思想得来的。这些概念都是隶属于`persistence coentext`，翻译过来就是持久化上下文，既然隶属一个上下文那肯定是有关系的。其中
 - 瞬时态/transient 
-  > 新new的一个就是表对象，这个对象就是顺势态
+  > 新new的一个就是表对象，这个对象就是瞬时态
 - 持久态/persistent 
   > 执行一下save方法，这个就是游离态
 - 游离态/detachment 
-  > 这个保存过的对象修改属性之后就变成了游离态（ps:持久态修改属性)好了，上面有一句最关键的话就是`unless it was accessed by the application while the entity manager was open`。去找一下我们的`EntityManager`接口，它是实现了`Session`接口的。很自然的就想到了事务，持久化没有事务（我当时写的时候还真没有加，哈哈！）
+  > 这个保存过的对象修改属性之后就变成了游离态（ps:持久态修改属性都会变成游离态)好了，上面有一句最关键的话就是`unless it was accessed by the application while the entity manager was open`。去找一下我们的`EntityManager`接口，它是实现了`Session`接口的。很自然的就想到了事务，持久化没有事务（我当时写的时候还真没有加，哈哈！）
+
+那么在什么场景下去使用返回`Optional`的`findById`，什么时候使用返回懒加载对象的`getOne`呢？从含义上来讲，`getOne`表示数据一定存在的数据，可以在udpate的时候使用，而`findById` 会立刻返回结果，可能存在也可能不存在。另外，`getOne`因为是返回的是一个引用，还没有具体执行，给一种异步的感觉，可以在响应式web程序中使用返回`CompletableFuture`等封装对象，当也得复核数据必须在数据库中存在这个条件。
 
 # 解决
 懒加载需要将相应的东西保存到session，我们能控制就是加一个事务注解在方法上`@Transactional`声明这个方法没有执行完之前session不关闭。因为使用的spring boot，加一个配置：
