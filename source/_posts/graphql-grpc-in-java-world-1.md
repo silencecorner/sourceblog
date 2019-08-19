@@ -298,6 +298,6 @@ mutation {
 ```
 生效，啦啦啦！
 ### 总结
-介绍graphql、gprc in java world的一些问题，一些intergration的思路，新特性参数验证，下一篇介绍使用graphql结合field mask做单项更新！
+介绍graphql、gprc in java world的一些问题，一些intergration的思路，新特性参数验证。
 
 本文代码仓库地址:[https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0](https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0)
