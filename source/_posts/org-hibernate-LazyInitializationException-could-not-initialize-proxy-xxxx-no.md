@@ -99,6 +99,7 @@ public class Post {
 - 游离态/detachment 
   > 这个保存过的对象修改属性之后就变成了游离态（ps:持久态修改属性都会变成游离态)。好了，上面有一句最关键的话就是`unless it was accessed by the application while the entity manager was open`。去找一下我们的`EntityManager`接口，它是实现了`Session`接口的。很自然的就想到了事务，持久化没有事务怎么能行（我当时写的时候还真没有加，哈哈！）。
 
+
 [代码源文件](https://github.com/silencecorner/graphql-grpc-exmaple/blob/master/post-api-java/src/main/java/com/bd/post/service/PostServiceImpl.java#L67)
 ```
 @Transactional
