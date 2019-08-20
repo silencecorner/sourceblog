@@ -95,7 +95,7 @@ public class Post {
 - 瞬时态/transient 
   > 新new的一个就是表对象，这个对象就是瞬时态
 - 持久态/persistent 
-  > 执行一下save方法，这个就是持久态
+  > 执行一下save方法，这个对象就变成持久态
 - 游离态/detachment 
   > 这个保存过的对象修改属性之后就变成了游离态（ps:持久态修改属性都会变成游离态)好了，上面有一句最关键的话就是`unless it was accessed by the application while the entity manager was open`。去找一下我们的`EntityManager`接口，它是实现了`Session`接口的。很自然的就想到了事务，持久化没有事务怎么能行（我当时写的时候还真没有加，哈哈！）
 
