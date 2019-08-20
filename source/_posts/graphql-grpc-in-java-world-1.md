@@ -162,6 +162,25 @@ public class PostResolver implements GraphQLResolver<PostProto.Post> {
 
 }
 ```
+#### PostsResolver.java
+proto定义的是[nodes](https://github.com/silencecorner/graphql-grpc-exmaple/blob/master/protos/Post.proto#L26)字段，生成的java代码的get方法是`getNodesList`，此时对应的jackson的json字段就变成`nodesList`，我们的graphql中使用是`nodes`字段，按照`graphql-tools`的解析顺序
+- com.bd.gateway.resolvers.post.PostsResolver.nodes(sample.PostProto$Posts)
+- com.bd.gateway.resolvers.post.PostsResolver.getNodes(sample.PostProto$Posts)
+- com.bd.gateway.resolvers.post.PostsResolver.nodes
+- sample.PostProto$Posts.nodes()
+- sample.PostProto$Posts.getNodes()
+- sample.PostProto$Posts.nodes
+  
+添加如下代码就可以解决字段不一的问题啦！  
+```
+@Component
+public class PostsResolver implements GraphQLResolver<PostProto.Posts> {
+
+	public List<PostProto.Post> nodes(PostProto.Posts posts){
+		return posts.getNodesList();
+	}
+}
+```
 ##### PostClient.java
 ```
 @Service
