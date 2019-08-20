@@ -171,7 +171,7 @@ proto定义的是[nodes](https://github.com/silencecorner/graphql-grpc-exmaple/b
 - sample.PostProto$Posts.getNodes()
 - sample.PostProto$Posts.nodes
   
-添加如下代码就可以解决字段不一的问题啦！  
+添加如下代码就可以解决字段不一样的问题啦！  
 ```
 @Component
 public class PostsResolver implements GraphQLResolver<PostProto.Posts> {
