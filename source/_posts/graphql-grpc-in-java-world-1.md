@@ -162,7 +162,7 @@ public class PostResolver implements GraphQLResolver<PostProto.Post> {
 
 }
 ```
-#### PostsResolver.java
+##### PostsResolver.java
 proto定义的是[nodes](https://github.com/silencecorner/graphql-grpc-exmaple/blob/master/protos/Post.proto#L26)字段，生成的java代码的get方法是`getNodesList`，此时对应的jackson的json字段就变成`nodesList`，我们的graphql中使用是`nodes`字段，按照`graphql-tools`的解析顺序
 - com.bd.gateway.resolvers.post.PostsResolver.nodes(sample.PostProto$Posts)
 - com.bd.gateway.resolvers.post.PostsResolver.getNodes(sample.PostProto$Posts)
