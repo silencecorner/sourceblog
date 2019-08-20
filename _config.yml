@@ -88,3 +88,7 @@ search:
     format: html
     limit: 10000 
   
+leancloud_counter_security:
+  enable_sync: true
+  app_id: TpYQNBoMwgc8JVqMGxqxXOg5-MdYXbMMI
+  app_key: wc9oRMmIfBPdqaWv9XXfEniG  

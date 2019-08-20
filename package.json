@@ -6,8 +6,8 @@
     "version": "3.9.0"
   },
   "dependencies": {
-    "eslint": "^6.1.0",
     "babel-runtime": "^6.26.0",
+    "eslint": "^6.1.0",
     "gitalk": "^1.5.0",
     "hexo": "^3.9.0",
     "hexo-deployer-git": "^1.0.0",
@@ -16,7 +16,7 @@
     "hexo-generator-index": "^0.2.1",
     "hexo-generator-searchdb": "^1.0.8",
     "hexo-generator-tag": "^0.2.0",
-    "hexo-generator-calendar": "github:theme-next/theme-next-calendar",
+    "hexo-leancloud-counter-security": "^1.4.0",
     "hexo-renderer-ejs": "^0.3.1",
     "hexo-renderer-marked": "^1.0.1",
     "hexo-renderer-stylus": "^0.3.3",
