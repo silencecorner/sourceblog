@@ -15,6 +15,8 @@ graphql和grpc的protobuf的schema都是一个描述性文件，只是双方的�
 - `graphql-gateway-java` java实现的网关
 - `post-api-java` post服务端微服务程序
 - `protos` proto源文件
+- schema graphql文件目录
+- vue-apollo-sample 基于graphql规范的vue项目
 ### 优化思路
 #### nodejs
 因为在去年实践过一次，没有深入思考，写起来总感觉有一点别扭！所以最开始我的想法是改用nodejs来写去掉类型检查，也写过一个在[repo的graphql-api中](https://github.com/silencecorner/graphql-grpc-exmaple/tree/master/graphql-api)
