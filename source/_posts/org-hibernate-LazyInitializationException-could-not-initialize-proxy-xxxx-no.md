@@ -97,7 +97,21 @@ public class Post {
 - 持久态/persistent 
   > 执行一下save方法，这个对象就变成持久态
 - 游离态/detachment 
-  > 这个保存过的对象修改属性之后就变成了游离态（ps:持久态修改属性都会变成游离态)。好了，上面有一句最关键的话就是`unless it was accessed by the application while the entity manager was open`。去找一下我们的`EntityManager`接口，它是实现了`Session`接口的。很自然的就想到了事务，持久化没有事务怎么能行（我当时写的时候还真没有加，哈哈！）
+  > 这个保存过的对象修改属性之后就变成了游离态（ps:持久态修改属性都会变成游离态)。好了，上面有一句最关键的话就是`unless it was accessed by the application while the entity manager was open`。去找一下我们的`EntityManager`接口，它是实现了`Session`接口的。很自然的就想到了事务，持久化没有事务怎么能行（我当时写的时候还真没有加，哈哈！）。[代码源文件](https://github.com/silencecorner/graphql-grpc-exmaple/blob/master/post-api-java/src/main/java/com/bd/post/service/PostServiceImpl.java#L67)
+```
+@Transactional
+@Override
+public void updatePost(PostProto.UpdatePostRequest request, StreamObserver<PostProto.Post> responseObserver){
+  check(request);
+  // field_mask 填充字段
+  Configuration configuration = Configuration.builder().addIgnoredFields(new FieldsIgnore().add(Post.class, "authorId", "createdAt")).build();
+  Post post = Converter.create(configuration).toDomain(Post.class, request);
+  Post newPost = postRepository.getOne(post.getId());
+  CopyUtils.copyProperties(post, newPost, true);
+  responseObserver.onNext(modelToRpc(postRepository.save(newPost)));
+  responseObserver.onCompleted();
+}
+```
 
 那么在什么场景下去使用返回`Optional`的`findById`，什么时候使用返回懒加载对象的`getOne`呢？从含义上来讲，`getOne`表示数据一定存在，可以在udpate的时候使用，而`findById` 会立刻返回结果，可能存在也可能不存在。另外，`getOne`因为是返回的是一个引用，还没有具体执行，给一种异步的感觉，可以在响应式web程序中使用返回`CompletableFuture`等封装对象，当也得符合数据必须在数据库中存在这个条件。
 
