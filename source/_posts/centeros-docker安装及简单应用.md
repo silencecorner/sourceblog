@@ -35,6 +35,7 @@ sudo yum install -y yum-utils \
     https://download.docker.com/linux/centos/docker-ce.repo
  sudo yum install -y docker-ce
 ```
+<!--more-->
 ##### 安装指定版本
 
 ```

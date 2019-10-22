@@ -13,6 +13,7 @@ date: 2019-08-19 17:07:45
 
 # 查错过程
 使用的orm框架是`spring data jpa`，`LazyInitializationException`第一时间想到`hibernate`和`spring data jpa`的懒加载机制。我理解的懒加载的概念是`在真正使用数据的时候才去执行sql语句(配置外键关联)，查询对外建关联对象`，但是我的model配置如下：
+<!--more-->
 ```
 /**
  * @author <a href="mailto:hilin2333@gmail.com">created by silencecorner 2019/7/10 3:28 PM</a>

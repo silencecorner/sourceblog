@@ -74,7 +74,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # 7.3.0
-theme: next
+theme: icarus
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -87,8 +87,3 @@ search:
     field: post
     format: html
     limit: 10000 
-  
-leancloud_counter_security:
-  enable_sync: true
-  app_id: TpYQNBoMwgc8JVqMGxqxXOg5-MdYXbMMI
-  app_key: wc9oRMmIfBPdqaWv9XXfEniG  
