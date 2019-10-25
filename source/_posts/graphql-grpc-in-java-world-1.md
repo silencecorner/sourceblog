@@ -5,6 +5,7 @@ tags:
   - grpc
 categories:
   - java
+thumbnail: /gallery/thumbnails/1_o9_bjlKXlMjii3G7BCNb-Q.png
 date: 2019-08-18 01:39:23
 ---
 
