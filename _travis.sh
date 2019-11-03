@@ -47,7 +47,7 @@ EOF
   git init
   git config user.name "silencecorner"
   git config user.email "hilin2333@gmail.com"
-  git add .
+  git add -f .
   git commit -m "Update Blog By TravisCI With Build $TRAVIS_BUILD_NUMBER"
   # Github Pages
   git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
