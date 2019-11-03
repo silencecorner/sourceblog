@@ -21,13 +21,13 @@ function failure(){
 #默认执行
 function default(){
 
-  git clone https://${GH_REF} .deploy_git
-  cd .deploy_git
+  git clone https://${GH_REF} deploy_git
+  cd deploy_git
 
   git checkout master
   cd ../
 
-  mv .deploy_git/.git/ ./public/
+  mv deploy_git/.git/ ./public/
   cd ./public
 
 cat <<EOF >> README.md
