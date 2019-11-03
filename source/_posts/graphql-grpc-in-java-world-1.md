@@ -5,12 +5,12 @@ tags:
   - grpc
 categories:
   - java
-thumbnail: /gallery/thumbnails/1_o9_bjlKXlMjii3G7BCNb-Q.png
+img: /gallery/thumbnails/1_o9_bjlKXlMjii3G7BCNb-Q.png
 date: 2019-08-18 01:39:23
 ---
-
+{% img /gallery/thumbnails/1_o9_bjlKXlMjii3G7BCNb-Q.png 架构图 %}
 ### 前言
-graphql和grpc的protobuf的schema都是一个描述性文件，只是双方的具体作用有差别而已。在Java中使用schema first的`graphql-java-tools`无疑是graphql在java语言的最佳入门实践，那么问题就来啦！protobuf和graphql各自都有自己的类型系统，graphql因为会序列化为json，那么就要遵从java bean的规范（序列化框架要求），protobuf使用的builder构造对象，没有默认的构造方法。<br>
+graphql和grpc的protobuf的schema都是一个描述性文件，只是双方的具体作用有差别而已。在Java中使用schema first的`graphql-java-tools`无疑是graphql在java语言的最佳入门实践，那么问题就来啦！protobuf和graphql各自都有自己的类型系统，graphql因为会序列化为json，那么就要遵从java bean的规范（序列化框架要求），protobuf使用的builder构造对象，没有默认的构造方法。<!--more-->  <br>
 本文代码仓库地址:[https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0](https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0)，如果了解[graphql-java-kickstart](https://github.com/graphql-java-kickstart)的代码的话，可以直接查看源代码！
 - `graphql-api` nodejs实现的网关
 - `graphql-gateway-java` java实现的网关
@@ -18,7 +18,6 @@ graphql和grpc的protobuf的schema都是一个描述性文件，只是双方的�
 - `protos` proto源文件
 - `schema` graphql文件目录
 - `vue-apollo-sample` 基于graphql规范的vue项目
-<!--more-->  
 ### 优化思路
 #### nodejs
 因为在去年实践过一次，没有深入思考，写起来总感觉有一点别扭！所以最开始我的想法是改用nodejs来写去掉类型检查，也写过一个在[repo的graphql-api中](https://github.com/silencecorner/graphql-grpc-exmaple/tree/master/graphql-api)

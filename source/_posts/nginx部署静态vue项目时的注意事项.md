@@ -6,9 +6,10 @@ tags:
 categories:
   - 前端
   - 运维
+img: /gallery/thumbnails/vue-nginx.png
 date: 2019-08-17 23:45:52
 ---
-
+{% img /gallery/thumbnails/vue-nginx.png vue-nginx %}
 ## 问题
 在使用webpack或者vuecli3作为脚手架开发vue项目时，使用内置的express编写测试代码都没有问题，运维拿到build生成的dist文件之后，需要通过这样方式访问`http:/xxxx.com/content-path`。如何部署才能保证前端页面资源正确加载呢？
 <!--more-->
@@ -26,6 +27,7 @@ location / {
     index  index.html index.htm;
 }
 ```
+
 成功访问到`http://localhost/post/`
 ---
 {% asset_img 测试.png 测试结果 %}

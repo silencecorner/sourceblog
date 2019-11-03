@@ -7,9 +7,11 @@ categories:
   - docker
   - CI/CD
 date: 2019-08-16 12:52:02
+img: /gallery/thumbnails/docker.png
 ---
 
 #### docker安裝
+<!--more-->
 ##### 卸载
 ```
 sudo yum remove docker \
@@ -35,7 +37,6 @@ sudo yum install -y yum-utils \
     https://download.docker.com/linux/centos/docker-ce.repo
  sudo yum install -y docker-ce
 ```
-<!--more-->
 ##### 安装指定版本
 
 ```
