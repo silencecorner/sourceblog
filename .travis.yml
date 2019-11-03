@@ -35,7 +35,6 @@ before_script:
 script:
   - hexo clean && hexo g
   - gulp
-  - hexo d
 
 after_success:
  # - LAST_BUILD_NUMBER=68
