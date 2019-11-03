@@ -10,17 +10,11 @@ cache:
     - "node_modules"
 
 notifications:
-  # 钉钉机器人消息推送部署结果
-  webhooks:
-    urls:
-      - https://oapi.dingtalk.com/robot/send?access_token=${DINGDING_ACCESS_TOKEN}
-    on_success: change
-    on_failure: always
 
   # 邮件发送部署结果通知
   email:
     recipients:
-      - snippet@91h5.cc
+      - hilin2333@gmail.com
     on_success: change
     on_failure: always
 
@@ -56,6 +50,4 @@ branches:
     - dev
 env:
  global:
-   - GH_REF: github.com/shenliyang/shenliyang.github.io.git
-   - GITEE_REF: gitee.com/shenliyang/shenliyang.git
-
+   - GH_REF: github.com/silencecorner/silencecorner.github.io.git
