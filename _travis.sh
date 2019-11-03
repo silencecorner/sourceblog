@@ -43,8 +43,6 @@ cat <<EOF >> README.md
 Job ID   | $TRAVIS_JOB_ID |
 Job NUM  | $TRAVIS_JOB_NUMBER |
 EOF
-
-  git init
   git config user.name "silencecorner"
   git config user.email "hilin2333@gmail.com"
   git add -f .
