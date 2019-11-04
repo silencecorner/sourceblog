@@ -1,5 +1,5 @@
 ---
-title: graphql grpc in java world(1)
+title: graphql与grpc集成
 tags:
   - graphql
   - grpc
@@ -215,6 +215,9 @@ public class AuthorClient {
     }
 }
 ```
+### protobuf repeated字段匹配问题
+[添加graphql-java-tools List后缀匹配](https://github.com/silencecorner/graphql-java-tools/commit/659d342281012653126aa1d8d9962af2f348a816)，解决repeated字段桥接转换失败的问题
+
 ### new feature
 [proto3](https://developers.google.com/protocol-buffers/docs/proto3)原生是不支持数据验证的，可能我们就要手写代码一个字段一个字段去做校验，项目中就会出现大量的丑陋到爆炸的代码。这里我找到一个protoc的[validate plugin](https://github.com/envoyproxy/protoc-gen-validate)，目前支持
 - go
@@ -319,6 +322,6 @@ mutation {
 ```
 生效，啦啦啦！
 ### 总结
-介绍graphql、gprc in java world的一些问题，一些intergration的思路，新特性参数验证。
+介绍graphql与gprc集成的一些问题，以及如何优化做到高效舒适的编写代码。
 
 本文代码仓库地址:[https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0](https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0)
