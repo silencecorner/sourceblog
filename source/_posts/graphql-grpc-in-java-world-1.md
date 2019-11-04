@@ -162,7 +162,7 @@ public class PostResolver implements GraphQLResolver<PostProto.Post> {
 
 }
 ```
-##### PostsResolver.java
+##### `repeated`字段转换失败解决
 proto定义的是[nodes](https://github.com/silencecorner/graphql-grpc-exmaple/blob/master/protos/Post.proto#L26)字段，生成的java代码的get方法是`getNodesList`，此时对应的jackson的json字段就变成`nodesList`，我们的graphql中使用是`nodes`字段，按照`graphql-java-tools`的解析顺序
 - com.bd.gateway.resolvers.post.PostsResolver.nodes(sample.PostProto$Posts)
 - com.bd.gateway.resolvers.post.PostsResolver.getNodes(sample.PostProto$Posts)
@@ -171,7 +171,7 @@ proto定义的是[nodes](https://github.com/silencecorner/graphql-grpc-exmaple/b
 - sample.PostProto$Posts.getNodes()
 - sample.PostProto$Posts.nodes
   
-同样对`repeated`修饰的请求参数同样生效，通过[添加graphql-java-tools List后缀匹配](https://github.com/silencecorner/graphql-java-tools/commit/659d342281012653126aa1d8d9962af2f348a816)，解决repeated字段桥接转换失败的问题
+同样对`repeated`修饰的请求参数同样生效，通过[添加graphql-java-tools List后缀匹配](https://github.com/silencecorner/graphql-java-tools/commit/659d342281012653126aa1d8d9962af2f348a816)，解决`repeated`字段桥接转换失败的问题
 ##### PostClient.java
 ```
 @Service
