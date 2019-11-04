@@ -324,4 +324,4 @@ mutation {
 ### 总结
 介绍graphql与gprc集成的一些问题，以及如何优化做到高效舒适的编写代码。
 
-本文代码仓库地址:[https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0](https://github.com/silencecorner/graphql-grpc-exmaple/tree/0.2.0)
+本文代码仓库地址:[https://github.com/silencecorner/graphql-grpc-exmaple](https://github.com/silencecorner/graphql-grpc-exmaple)
