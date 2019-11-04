@@ -69,7 +69,7 @@ WARNING: 请不要使用`google.protobuf.Empty`作为请求和响应类型，他
 
 Protobuf软件包名称用于生成的代码中，因此请避免使用内置类型或关键字（例如return或void)等常用的名称。这对于生成C ++尤为重要，因为C ++（从protobuf 3.6起）没有`FileOption`来覆盖默认的`namespace`计算名称。
 ### import path
-尝试从原始文件的位置构建，以使导入路径与程序包名称匹配：`mycompany.my_project.v1`中的类型应与`importmycompany/my_project/v1/some_file.proto`一起导入。 Protobuf工具链不是必需的，但是确实可以帮助我们记住输入的内容。
+尝试从原始文件的位置构建，以使导入路径与程序包名称匹配：`mycompany.my_project.v1`中的类型应与`import "mycompany/my_project/v1/some_file.proto"`一起导入。 Protobuf工具链不是必需的，但是确实可以帮助我们记住输入的内容。
 
 ### Next-Number 注释
 在大型protobuf消息中，弄清楚应该为新字段使用哪个字段编号可能会很烦人。为了简化将来的编辑者的工作，请在消息和枚举的末尾添加注释
