@@ -171,16 +171,7 @@ proto定义的是[nodes](https://github.com/silencecorner/graphql-grpc-exmaple/b
 - sample.PostProto$Posts.getNodes()
 - sample.PostProto$Posts.nodes
   
-添加如下代码就可以解决字段不一样的问题啦！  
-```
-@Component
-public class PostsResolver implements GraphQLResolver<PostProto.Posts> {
-
-	public List<PostProto.Post> nodes(PostProto.Posts posts){
-		return posts.getNodesList();
-	}
-}
-```
+同样对`repeated`修饰的请求参数同样生效，通过[添加graphql-java-tools List后缀匹配](https://github.com/silencecorner/graphql-java-tools/commit/659d342281012653126aa1d8d9962af2f348a816)，解决repeated字段桥接转换失败的问题
 ##### PostClient.java
 ```
 @Service
@@ -215,9 +206,6 @@ public class AuthorClient {
     }
 }
 ```
-### protobuf repeated字段匹配问题
-[添加graphql-java-tools List后缀匹配](https://github.com/silencecorner/graphql-java-tools/commit/659d342281012653126aa1d8d9962af2f348a816)，解决repeated字段桥接转换失败的问题
-
 ### new feature
 [proto3](https://developers.google.com/protocol-buffers/docs/proto3)原生是不支持数据验证的，可能我们就要手写代码一个字段一个字段去做校验，项目中就会出现大量的丑陋到爆炸的代码。这里我找到一个protoc的[validate plugin](https://github.com/envoyproxy/protoc-gen-validate)，目前支持
 - go
