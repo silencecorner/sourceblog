@@ -27,9 +27,7 @@ location / {
     index  index.html index.htm;
 }
 ```
-
 成功访问到`http://localhost/post/`
----
 {% asset_img 测试.png 测试结果 %}
 ### alias部署
 以root部署例子为前提,那么我们的配置文件nginx.conf应该如下
