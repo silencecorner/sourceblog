@@ -20,6 +20,9 @@ menu:
 - page: 关于我
   url: /about/
   icon:  
+- page: 微微的相册
+  url: /album3d/7.html
+  icon:    
 
 ## favicon
 favicon: /favicon-32x32.ico

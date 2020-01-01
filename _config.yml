@@ -26,7 +26,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+skip_render: album3d/**
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -86,4 +86,4 @@ search:
     path: search.xml
     field: post
     format: html
-    limit: 10000 
+    limit: 10000     
