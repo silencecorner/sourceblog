@@ -1,7 +1,8 @@
 ---
 title: 关于我
 date: 2019-01-16 11:15:44
-comments: false
+type: "about"
+layout: "about"
 ---
 # 联系方式
 - Email：hilin2333@gmail.com

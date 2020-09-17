@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 一个闷骚的博客
-subtitle:
-description: 一个闷骚的博客
-keywords: 闷骚的博客,silencecorner,silence角落,java,分布式
+title: silence角落
+subtitle: 不只幻想美好
+description: 人之所以愤怒,源于对自身的无能
+keywords: silencecorner,silence角落,java,分布式
 author: silence角落
 language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://silencecorner.github.io
+url: http://silencecorner.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -39,10 +39,16 @@ post_asset_folder: true
 relative_link: false
 future: true
 highlight:
-  enable: true
+  enable: false
   line_number: true
   auto_detect: false
   tab_replace:
+
+prism_plugin:
+  mode: 'preprocess'    # realtime/preprocess
+  theme: 'tomorrow'
+  line_number: false    # default false
+  custom_css:
   
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -50,7 +56,7 @@ highlight:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 10
+  per_page: 12
   order_by: -date
   
 # Category & Tag
@@ -74,7 +80,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # 7.3.0
-theme: hexo-theme-snippet
+theme: hexo-theme-matery
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -85,5 +91,14 @@ deploy:
 search:
     path: search.xml
     field: post
-    format: html
-    limit: 10000     
+
+permalink_pinyin:
+  enable: true
+  separator: '-' # default: '-'    
+
+githubEmojis:
+  enable: true
+  className: github-emoji
+  inject: true
+  styles:
+  customEmojis:  
