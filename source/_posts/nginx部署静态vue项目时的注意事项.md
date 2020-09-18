@@ -8,6 +8,7 @@ categories:
   - 运维
 img: /gallery/thumbnails/vue-nginx.png
 date: 2019-08-17 23:45:52
+summary: nginx部署静态vue项目时应注意publicPath配置
 ---
 {% img /gallery/thumbnails/vue-nginx.png vue-nginx %}
 ## 问题

@@ -1,10 +1,14 @@
 ---
-title: org.hibernate.LazyInitializationException
+title: LazyInitializationException
 tags:
   - issue
 categories: java
 date: 2019-08-19 17:07:45
 img: /gallery/thumbnails/unitOfWork.png
+keywords: 
+  - LazyInitializationException
+  - unitOfWork
+  - org.hibernate.LazyInitializationException
 ---
 {% img /gallery/thumbnails/unitOfWork.png unitOfWork %}
 # 问题
