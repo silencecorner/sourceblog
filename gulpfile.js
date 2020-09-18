@@ -5,7 +5,6 @@
         rename = require('gulp-rename'),
         minifycss = require('gulp-minify-css'),
         autoprefixer = require('gulp-autoprefixer'),
-        uglify = require('gulp-uglify'),
         jshint = require('gulp-jshint'),
         stylish = require('jshint-stylish'),
         notify = require('gulp-notify'),
@@ -72,7 +71,6 @@
     // 压缩处理 js
     gulp.task('minify-js', function() {
         return gulp.src('./public/js/*.js')
-            .pipe(uglify())
             .pipe(gulp.dest('./public/js'))
             .pipe(notify({ message: 'js minify complete' }));
     });
