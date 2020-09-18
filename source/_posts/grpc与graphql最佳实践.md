@@ -8,10 +8,11 @@ categories:
 img: /gallery/thumbnails/graphql_grpc.png
 top: true
 date: 2019-10-24 16:28:29
+summary: 本文分为两部分，一部分翻译自effective-grpc,另一部分来自于集成grpc graphql实践
 ---
 
 {% img /gallery/thumbnails/graphql_grpc.png graphql_grpc %}
-本文分为两部分，一部分翻译自[effective-grpc](https://john-millikin.com/effective-grpc)，另一部分来自于集成grpc graphql实践。文章内容都是经过实践，请放心食用！
+本文分为两部分，一部分翻译自[effective-grpc](https://john-millikin.com/effective-grpc)，另一部分来自于集成grpc graphql实践。
 <!--more-->
 # Effective grpc
 ## grpc
