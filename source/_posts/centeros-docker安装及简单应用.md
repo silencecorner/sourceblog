@@ -8,6 +8,7 @@ categories:
   - CI/CD
 date: 2019-08-16 12:52:02
 img: /gallery/thumbnails/docker.png
+summary: docker安装及简单应用
 ---
 
 #### docker安裝

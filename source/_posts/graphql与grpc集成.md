@@ -7,6 +7,7 @@ categories:
   - java
 img: /gallery/thumbnails/1_o9_bjlKXlMjii3G7BCNb-Q.png
 date: 2019-08-18 01:39:23
+summary: graphql和grpc的protobuf的schema都是一个描述性文件，只是双方的具体作用有差别而已
 ---
 {% img /gallery/thumbnails/1_o9_bjlKXlMjii3G7BCNb-Q.png 架构图 %}
 ### 前言

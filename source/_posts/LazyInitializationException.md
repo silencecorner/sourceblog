@@ -9,6 +9,7 @@ keywords:
   - LazyInitializationException
   - unitOfWork
   - org.hibernate.LazyInitializationException
+summary: hibernate中数据状态产生的问题
 ---
 {% img /gallery/thumbnails/unitOfWork.png unitOfWork %}
 # 问题
