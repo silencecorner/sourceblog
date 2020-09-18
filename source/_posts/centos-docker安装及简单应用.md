@@ -1,5 +1,5 @@
 ---
-title: centeros docker安装及简单应用
+title: centos docker安装及简单应用
 tags:
   - docker
   - jenkins
@@ -8,11 +8,10 @@ categories:
   - CI/CD
 date: 2019-08-16 12:52:02
 img: /gallery/thumbnails/docker.png
-summary: docker安装及简单应用
+summary: centos docker、swarm安装及一些简单应用
 ---
 
 #### docker安裝
-<!--more-->
 ##### 卸载
 ```
 sudo yum remove docker \

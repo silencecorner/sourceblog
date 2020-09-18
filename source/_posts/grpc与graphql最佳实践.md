@@ -8,7 +8,7 @@ categories:
 img: /gallery/thumbnails/graphql_grpc.png
 top: true
 date: 2019-10-24 16:28:29
-summary: 本文分为两部分，一部分翻译自effective-grpc,另一部分来自于集成grpc graphql实践
+summary: 部分翻译自effective-grpc,部分来自于集成实践
 ---
 
 {% img /gallery/thumbnails/graphql_grpc.png graphql_grpc %}
