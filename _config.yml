@@ -13,7 +13,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://blog.silencecorner.cn/
+url: https://blog.silencecorner.cn/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults: 
@@ -102,3 +102,11 @@ githubEmojis:
   inject: true
   styles:
   customEmojis:  
+
+# offline config passed to sw-precache.
+offline:
+  maximumFileSizeToCacheInBytes: 5242880
+  staticFileGlobs:
+    - public/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff,woff2}
+  stripPrefix: public
+  verbose: true
